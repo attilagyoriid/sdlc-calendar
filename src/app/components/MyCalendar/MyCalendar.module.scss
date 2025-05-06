@@ -1,0 +1,98 @@
+// Update the MyCalendar.module.scss file
+// src/app/components/MyCalendar/MyCalendar.module.scss
+.calendarContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+
+  .calendar {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+
+    // Custom styling for FullCalendar
+    :global {
+      .fc {
+        // Calendar header styling
+        .fc-toolbar {
+          padding: 16px;
+          background-color: #f8f9fa;
+
+          .fc-toolbar-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+          }
+
+          .fc-button-primary {
+            background-color: #0070f3;
+            border-color: #0070f3;
+
+            &:hover {
+              background-color: #0051a8;
+              border-color: #0051a8;
+            }
+
+            &:disabled {
+              background-color: #6c757d;
+              border-color: #6c757d;
+            }
+          }
+        }
+
+        // Calendar cells styling
+        .fc-daygrid-day {
+          &:hover {
+            background-color: #f8f9fa;
+          }
+        }
+
+        .fc-daygrid-day-number {
+          padding: 8px;
+          font-weight: 500;
+        }
+
+        // Today's date highlight
+        .fc-day-today {
+          background-color: rgba(0, 112, 243, 0.1) !important;
+        }
+
+        // Event styling
+        .fc-event {
+          border-radius: 4px;
+          padding: 2px 4px;
+          font-size: 0.85rem;
+          cursor: pointer;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+      }
+    }
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    font-size: 1.2rem;
+    color: #666;
+  }
+
+  .error {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+    font-size: 1.2rem;
+    color: #e53935;
+    text-align: center;
+    padding: 0 20px;
+  }
+}

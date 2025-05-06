@@ -1,0 +1,67 @@
+.emailSendContainer {
+  margin-bottom: 20px;
+}
+
+.emailSendTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.emailSendActions {
+  display: flex;
+  align-items: center;
+  margin-top: 16px;
+  gap: 12px;
+}
+
+.sendButton {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #388e3c;
+  }
+  
+  &.disabled {
+    background-color: #c8e6c9;
+    cursor: not-allowed;
+    
+    &:hover {
+      background-color: #c8e6c9;
+    }
+  }
+}
+
+.successMessage {
+  color: #388e3c;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  
+  &:before {
+    content: '✓';
+    margin-right: 6px;
+    font-weight: bold;
+  }
+}
+
+.errorMessage {
+  color: #e53935;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  
+  &:before {
+    content: '✗';
+    margin-right: 6px;
+    font-weight: bold;
+  }
+}
