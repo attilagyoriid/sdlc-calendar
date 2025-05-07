@@ -9,15 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/core": "^6.1.17",
     "@fullcalendar/daygrid": "^6.1.17",
     "@fullcalendar/interaction": "^6.1.17",
     "@fullcalendar/react": "^6.1.17",
+    "@lottiefiles/dotlottie-react": "^0.13.5",
     "mongodb": "^6.16.0",
     "mongoose": "^8.14.1",
     "next": "15.3.1",
+    "nodemailer": "^7.0.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-hot-toast": "^2.5.2",
+    "react-quill": "^2.0.0",
     "sass": "^1.87.0"
   },
   "devDependencies": {
@@ -25,6 +29,7 @@
     "@types/mongodb": "^4.0.6",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

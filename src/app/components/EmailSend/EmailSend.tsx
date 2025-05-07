@@ -4,6 +4,8 @@ import { useState } from 'react';
 import styles from './EmailSend.module.scss';
 import emailsData from '../../data/emails.json';
 import MultiSelect from '../MultiSelect';
+import { sendEventNotification } from '../../actions/emailActions';
+import { showCustomToast } from '../CustomToast';
 
 interface EmailSendProps {
   eventTitle: string;
@@ -17,23 +19,50 @@ export default function EmailSend({ eventTitle, eventDescription, eventDate }: E
   const emails = emailsData.emails || [];
 
   // Handle send button click
-  const handleSendEmails = () => {
+  const handleSendEmails = async () => {
     if (selectedEmails.length === 0) return;
     
     setSendStatus('sending');
     
-    // Simulate sending emails
-    setTimeout(() => {
-      console.log('Sending email notification to:', selectedEmails);
-      console.log('Event details:', { eventTitle, eventDescription, eventDate });
-      setSendStatus('success');
+    try {
+      // Create FormData for the server action
+      const formData = new FormData();
+      formData.append('recipients', JSON.stringify(selectedEmails));
+      formData.append('eventTitle', eventTitle);
+      formData.append('eventDescription', eventDescription);
+      formData.append('eventDate', eventDate);
       
-      // Reset status after showing success message
+      // Call the server action to send emails
+      const result = await sendEventNotification(formData);
+      
+      if (result.success) {
+        setSendStatus('success');
+        showCustomToast('Email notifications sent successfully!', 'success');
+        
+        // Reset status after showing success message
+        setTimeout(() => {
+          setSendStatus('idle');
+          setSelectedEmails([]);
+        }, 3000);
+      } else {
+        setSendStatus('error');
+        showCustomToast(`Failed to send notifications: ${result.message}`, 'error');
+        
+        // Reset status after showing error message
+        setTimeout(() => {
+          setSendStatus('idle');
+        }, 3000);
+      }
+    } catch (error: any) {
+      console.error('Error sending email notifications:', error);
+      setSendStatus('error');
+      showCustomToast(`Error sending notifications: ${error.message || 'Unknown error'}`, 'error');
+      
+      // Reset status after showing error message
       setTimeout(() => {
         setSendStatus('idle');
-        setSelectedEmails([]);
       }, 3000);
-    }, 1500);
+    }
   };
 
   return (

@@ -5,10 +5,9 @@ import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import toast from "react-hot-toast";
 import styles from "./MyCalendar.module.scss";
 import EventForm, { EventFormData, CalendarEvent } from "../EventForm";
-import { fetchEvents, deleteEvent } from "../../actions/eventActions"; // Import deleteEvent
+import { fetchEvents, deleteEventAction } from "../../actions/eventActions"; // Import deleteEvent
 import { showCustomToast } from "../../components/CustomToast";
 
 export default function MyCalendar() {
@@ -144,7 +143,7 @@ export default function MyCalendar() {
       console.log("Deleting event with ID:", id);
 
       // Call the deleteEvent function from your actions
-      const result = await deleteEvent(id);
+      const result = await deleteEventAction(id);
 
       if (result.success) {
         showCustomToast("Event deleted successfully", "success");

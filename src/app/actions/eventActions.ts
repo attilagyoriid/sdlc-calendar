@@ -106,11 +106,9 @@ export async function createEventAction(
 }
 
 export async function deleteEventAction(
-  formData: FormData
+  id: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const id = formData.get("id") as string;
-
     if (!id) {
       return { success: false, error: "Event ID is required" };
     }

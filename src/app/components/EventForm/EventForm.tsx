@@ -70,15 +70,15 @@ function SubmitButton({ isEdit }: { isEdit: boolean }) {
 }
 
 // Delete Button Component
-function DeleteButton(handleDeleteEvent: () => void) {
+function DeleteButton({ onClick }: { onClick: () => void }) {
   const { pending } = useFormStatus();
 
   return (
     <button
-      type="submit"
+      type="button"
       className={styles.deleteButton}
       disabled={pending}
-      onClick={handleDeleteEvent}
+      onClick={onClick}
     >
       {pending ? "Deleting..." : "Delete"}
     </button>
@@ -109,9 +109,22 @@ export default function EventForm({
   const formRef = useRef<HTMLFormElement>(null);
   const deleteFormRef = useRef<HTMLFormElement>(null);
 
-  const handleDeleteEvent = () => {
+  const handleDeleteEvent = async (e: React.MouseEvent) => {
+    e.preventDefault();
     if (isEdit && formData.id && onDelete) {
       onDelete(formData.id);
+    } else if (isEdit && formData.id) {
+      // If onDelete prop is not provided, submit the delete form directly
+      const deleteFormData = new FormData();
+      deleteFormData.append("id", formData.id);
+      const result = await deleteEventAction(deleteFormData);
+      
+      if (result.success) {
+        showCustomToast("Event deleted successfully!", "success");
+        onSuccess();
+      } else {
+        showCustomToast(result.error || "Failed to delete event", "error");
+      }
     }
   };
 
@@ -486,14 +499,9 @@ export default function EventForm({
 
           <div className={styles.modalActions}>
             {isEdit && (
-              <form
-                ref={deleteFormRef}
-                action={deleteFormAction}
-                className={styles.deleteForm}
-              >
-                <input type="hidden" name="id" value={formData.id} />
-                <DeleteButton handleDeleteEvent />
-              </form>
+              <div className={styles.deleteForm}>
+                <DeleteButton onClick={handleDeleteEvent} />
+              </div>
             )}
             <SubmitButton isEdit={isEdit} />
           </div>
